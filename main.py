@@ -34,17 +34,55 @@ class style():
     RESET = '\033[0m'
 
 # prompt user for message file path
-message_file_path = input("Please enter the path to the message file: ")
+#message_file_path = input("Please enter the path to the message file: ")
+message_file_path = "input/message.txt"
+number_file_path = "input/numbers.txt"
+image_path = "input/image.jpg"
 if not os.path.isfile(message_file_path):
-    print("Invalid message file path!")
-    sys.exit()
+    path = input("""Can not find the message file in input directory. Please make 
+sure you have a message.txt file in input directory and press enter
+or enter your own path if the file is located somewhere else.
+
+Enter alternate path or press enter to exit: """)
+    if path == "":
+        print("\nOperation stopped by USER : " + style.RED + "Could not find message file/altenate path not provided" + style.RESET)
+        sys.exit()
+
+    else:
+        message_file_path = path
+print(style.GREEN + "Message file found." + style.RESET)
 
 # prompt user for number file path
-number_file_path = input("Please enter the path to the number file: ")
+#number_file_path = input("Please enter the path to the number file: ")
 if not os.path.isfile(number_file_path):
-    print("Invalid number file path!")
-    sys.exit()
-image_path = input("Please enter the path to the image file: ")
+    path = input("""Can not find the number file in input directory. Please make
+sure you have a numbers.txt file in input directory and press enter
+or enter your own path if the file is located somewhere else.
+
+Enter alternate path or press enter to exit: """)
+    if path == "":
+        print("\nOperation stopped by USER : " + style.RED + "Could not find number file/altenate path not provided" + style.RESET)
+        sys.exit()
+    else:
+        number_file_path = path
+print(style.GREEN + "\nNumber file found." + style.RESET)
+
+
+#image_path = input("Please enter the path to the image file: ")
+ipath = ""
+image = True
+if not os.path.isfile(image_path):
+    ipath = input("""Can not find the image file in input directory. If you want
+to continue without an image, press enter or enter your own
+path if the file is located somewhere else.
+
+Enter alternate path or press enter to exit: """)
+    image_path = ipath
+    if ipath == "":
+        print(style.RED + "\nNo image to be sent." + style.RESET)
+        image = False
+if image:
+    print(style.GREEN + "\nImage file found." + style.RESET)
 
 f = open(message_file_path, "r", encoding="utf8")
 message = f.read()
@@ -82,11 +120,13 @@ for idx, number in enumerate(numbers):
         
         driver.get(url)
         sleep(5)
-        attachment_box = WebDriverWait(driver, delay).until(EC.presence_of_element_located((By.XPATH, '//div[@title = "Attach"]')))
-        attachment_box.click()
-        image_box = WebDriverWait(driver, delay).until(EC.presence_of_element_located((By.XPATH, '//input[@accept="image/*,video/mp4,video/3gpp,video/quicktime"]')))
-        image_box.send_keys(image_path)
-        sleep(5)
+        if image_path != "":
+            attachment_box = WebDriverWait(driver, delay).until(EC.presence_of_element_located((By.XPATH, '//div[@title = "Attach"]')))
+            attachment_box.click()
+            image_box = WebDriverWait(driver, delay).until(EC.presence_of_element_located((By.XPATH, '//input[@accept="image/*,video/mp4,video/3gpp,video/quicktime"]')))
+            image_box.send_keys(image_path)
+            sleep(5)
+        
         send_button = WebDriverWait(driver, delay).until(EC.element_to_be_clickable((By.XPATH, '//span[@data-icon="send"]')))
         send_button.click()
         sleep(7)
