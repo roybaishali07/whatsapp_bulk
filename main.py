@@ -43,7 +43,7 @@ if not os.path.isfile(message_file_path):
 sure you have a message.txt file in input directory and press enter
 or enter your own path if the file is located somewhere else.
 
-Enter alternate path or press enter to exit: """)
+Enter alternate path or press enter to exit: """).strip('\"')
     if path == "":
         print("\nOperation stopped by USER : " + style.RED + "Could not find message file/altenate path not provided" + style.RESET)
         sys.exit()
@@ -59,7 +59,7 @@ if not os.path.isfile(number_file_path):
 sure you have a numbers.txt file in input directory and press enter
 or enter your own path if the file is located somewhere else.
 
-Enter alternate path or press enter to exit: """)
+Enter alternate path or press enter to exit: """).strip('\"')
     if path == "":
         print("\nOperation stopped by USER : " + style.RED + "Could not find number file/altenate path not provided" + style.RESET)
         sys.exit()
@@ -76,7 +76,7 @@ if not os.path.isfile(image_path):
 to continue without an image, press enter or enter your own
 path if the file is located somewhere else.
 
-Enter alternate path or press enter to continue: """)
+Enter alternate path or press enter to continue: """).strip('\"')
     image_path = ipath
     if ipath == "":
         print(style.RED + "\nNo image to be sent." + style.RESET)
