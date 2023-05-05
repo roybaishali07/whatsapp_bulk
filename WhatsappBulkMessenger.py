@@ -76,7 +76,7 @@ if not os.path.isfile(image_path):
 to continue without an image, press enter or enter your own
 path if the file is located somewhere else.
 
-Enter alternate path or press enter to continue: """).strip('\"')
+Enter alternate path or press enter to continue: """).replace('\"', '')
     image_path = ipath
     if ipath == "":
         print(style.RED + "\nNo image to be sent." + style.RESET)
