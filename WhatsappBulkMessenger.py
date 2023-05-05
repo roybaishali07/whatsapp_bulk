@@ -59,7 +59,7 @@ if not os.path.isfile(number_file_path):
 sure you have a numbers.txt file in input directory and press enter
 or enter your own path if the file is located somewhere else.
 
-Enter alternate path or press enter to exit: """).strip('\"')
+Enter alternate path or press enter to exit: """).replace('\"', '')
     if path == "":
         print("\nOperation stopped by USER : " + style.RED + "Could not find number file/altenate path not provided" + style.RESET)
         sys.exit()
@@ -90,7 +90,7 @@ f.close()
 
 print(style.YELLOW + '\nThis is your message-')
 print(style.GREEN + message)
-print("\n" + style.RESET)
+print("" + style.RESET)
 message = quote(message)
 
 numbers = []
@@ -100,7 +100,11 @@ for line in f.read().splitlines():
         numbers.append(line.strip())
 f.close()
 total_number = len(numbers)
-print(style.RED + 'We found ' + str(total_number) + ' numbers in the file' + style.RESET)
+if total_number == 0:
+    print(style.RED + 'No numbers found in the file' + style.RESET)
+    sys.exit()
+
+print(style.GREEN + 'We found ' + str(total_number) + ' numbers in the file' + style.RESET)
 delay = 30
 
 driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
