@@ -10,6 +10,7 @@ from webdriver_manager.chrome import ChromeDriverManager
 from time import sleep
 from urllib.parse import quote
 from selenium.webdriver.chrome.service import Service
+import urllib.parse
 
 options = Options()
 options.add_experimental_option("excludeSwitches", ["enable-logging"])
@@ -114,6 +115,14 @@ input(style.MAGENTA + "AFTER logging into Whatsapp Web is complete and your chat
 
 # input(style.MAGENTA + "AFTER logging into Whatsapp Web is complete and your chats are visible, press ENTER..." + style.RESET)
 
+
+# Read message from file
+with open(message_file_path, 'r', encoding='utf8') as f:
+    message = f.read().strip()
+
+# Increase message character limit
+message = urllib.parse.quote(message, safe='')
+
 for idx, number in enumerate(numbers):
     number = number.strip()
     if number == "":
@@ -137,5 +146,6 @@ for idx, number in enumerate(numbers):
         print(style.GREEN + 'Message sent to: ' + number + style.RESET)
     except Exception as e:
         print(style.RED + 'Failed to send message to ' + number + str(e) + style.RESET)
+
 
 driver.close()
