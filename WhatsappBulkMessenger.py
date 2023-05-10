@@ -128,6 +128,8 @@ with open(message_file_path, 'r', encoding='utf8') as f:
 # Increase message character limit
 message = urllib.parse.quote(message, safe='')
 
+error_numbers = []
+
 for idx, number in enumerate(numbers):
     number = number.strip()
     if number == "":
@@ -150,7 +152,15 @@ for idx, number in enumerate(numbers):
         sleep(7)
         print(style.GREEN + 'Message sent to: ' + number + style.RESET)
     except Exception as e:
+        error_numbers.append(number)
         print(style.RED + 'Failed to send message to ' + number + str(e) + style.RESET)
 
-
-driver.close()
+# Write error phone numbers to a file
+if error_numbers:
+    with open("input/error.txt", "w") as file:
+        file.write("Error phone numbers:\n")
+        file.write(",".join(error_numbers))
+        file.write("\n")
+        
+    print("Error phone numbers have been saved in error.txt file.")
+    print("Error phone numbers:", ", ".join(error_numbers))
