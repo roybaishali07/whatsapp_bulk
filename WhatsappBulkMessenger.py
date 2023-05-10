@@ -97,8 +97,13 @@ message = quote(message)
 numbers = []
 f = open(number_file_path, "r")
 for line in f.read().splitlines():
-    if line.strip() != "":
-        numbers.append(line.strip())
+    line = line.strip()
+    if line != "":
+        if line[0:2] == "91":
+            line = line[2::]
+        elif line[0] == "+":
+            line = line[3::]
+        numbers.append(line)
 f.close()
 total_number = len(numbers)
 if total_number == 0:
